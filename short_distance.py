@@ -36,20 +36,26 @@ def aisle_mapp(aisle_cordinates):
         return C3
     else:
         return A0
-def dist_between_aisle(current,next):
+def dist_between_aisle(current_aisle,next_aisle):
     #print(current)
     #print(next)
     dis_bw_two_aisle=0
-    if current[0]== next[0]:
+    if current_aisle[0]== next_aisle[0]:
      #   print("Same isle")
-        dis_bw_two_aisle=abs(current[1]-next[1])
+        dis_bw_two_aisle=abs(current_aisle[1]-next_aisle[1])
         return dis_bw_two_aisle
     else:
       #  print("Next aisle")
       #  print(current[0],":",current[1])
       #  print(next[0],":",next[1])
-        dis_bw_two_aisle= (abs(current[0]-next[0]))+(abs(current[1]-next[1]))
+        dis_bw_two_aisle= (abs(current_aisle[0]-next_aisle[0]))+(abs(current_aisle[1]-next_aisle[1]))
         return dis_bw_two_aisle
+def optimum_route(current_aisle,next_aisle):
+    next_aisle=[2,2]
+    current_aisle=[3,3]
+    distance = math.sqrt((current_aisle[1])**2 + (next_aisle[1]**2))
+    print("in new loop",distance)
+    print(dist_between_aisle(current_aisle,next_aisle))
 
 def get_distance_current_loop(usrlist):
     distance = 0
@@ -64,6 +70,7 @@ def get_distance_current_loop(usrlist):
 
         distance = distance + dist_between_aisle(current_aisle_cord, next_aisle_cord)
         #print("Distance Travelled total :", distance)
+        optimum_route(current_aisle_cord,next_aisle_cord)
     return distance
 
 
@@ -73,3 +80,4 @@ print("Total Aisle to cover: ",len(usrlist))
 distance=0
 distance=get_distance_current_loop(usrlist)
 print("Distance to cover",len(usrlist)," aisles :",distance)
+
