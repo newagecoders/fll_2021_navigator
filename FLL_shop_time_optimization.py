@@ -44,39 +44,7 @@ def aisle(X,Y):
     #if (A[x] == B[x]):
     #    print("Same aisle")
 
-def aisle_mapp(aisle_cordinates):
-    A1 = [0,0]
-    A2 = [0,1]
-    A3 = [0,2]
-    B1 = [1,0]
-    B2 = [1,1]
-    B3 = [1,2]
-    C1 = [2,0]
-    C2 = [2,1]
-    C3 = [2,2]
-    A0 = [0,0]
-
-    if aisle_cordinates == "A1":
-        return A1
-    elif aisle_cordinates =="A2":
-        return A2
-    elif aisle_cordinates =="A3":
-        return A3
-    elif aisle_cordinates =="B1":
-        return B1
-    elif aisle_cordinates =="B2":
-        return B2
-    elif aisle_cordinates =="B3":
-        return B3
-    elif aisle_cordinates =="C1":
-        return C1
-    elif aisle_cordinates =="C2":
-        return C2
-    elif aisle_cordinates =="C3":
-        return C3
-    else:
-        return A0
-def return_aisle_cord(aisle):
+def aisle_mapp(aisle):
     aisle = str(aisle)
     first_val = aisle[0]
     second_val = int(aisle[1])
@@ -84,7 +52,7 @@ def return_aisle_cord(aisle):
     cord_list = []
     cord_list.append(alphabet.index(first_val))
     cord_list.append(second_val - 1)
-    print(cord_list)
+    return cord_list
 
 def dist_between_aisle(current_aisle,next_aisle):
     dis_bw_two_aisle=0
@@ -102,6 +70,25 @@ def get_distance_current_loop(usrlist):
         next_aisle_cord = aisle_mapp(usrlist[aisles + 1])
         distance = distance + dist_between_aisle(current_aisle_cord, next_aisle_cord)
     return distance
+def get_best_path(isle_list,distance):
+    possible_perm = list(itertools.permutations(isle_list))
+    distance_current = 0
+    distance_minimum = distance
+    list_optimum = []
+    for permutation in range(0, len(possible_perm)):
+        current_perm = list(possible_perm[permutation])
+        distance_current = get_distance_current_loop(current_perm)
+        if distance_current < distance_minimum:
+            distance_minimum = distance_current
+            list_optimum = current_perm.copy()
+            #print("List optimum", list_optimum)
+        list_optimum=current_perm.copy()
+        #print("Distance:",distance_minimum,"List outside IF",current_perm )
+    bestpath=[distance_minimum,list_optimum]
+    return bestpath
+
+
+
 def main():
     print("Welcome to Navigator")
     list_items_in_shop = []
@@ -130,21 +117,11 @@ def main():
 
     distance = get_distance_current_loop(isle_list)
     print("Distance to cover", len(isle_list), " aisles :", distance)
+    path=get_best_path(isle_list,distance)
+    #print(path)
 
-    possible_perm = list(itertools.permutations(isle_list))
-    #print(type(possible_perm))
-    #print(len(possible_perm))
-    #print(possible_perm)
-    distance_current=0
-    distance_minimum=distance
-    list_optimum=[]
-    for permutation in range(0, len(possible_perm)):
-        distance_current = get_distance_current_loop(list(possible_perm[permutation]))
-        if distance_current < distance_minimum:
-            distance_minimum=distance_current
-            list_optimum=list(possible_perm[permutation]).copy()
-            print("List optimum",list_optimum)
-    print("Distance",distance_minimum,"for Loop:",list_optimum)
+
+    print("Distance","for Loop:",path)
 
 
 if __name__=="__main__":
