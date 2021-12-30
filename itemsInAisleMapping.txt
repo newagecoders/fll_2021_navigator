@@ -1,0 +1,12 @@
+A1 yogurt
+A2 milk
+A3 cheese
+B1 carrot
+B2 tomato
+B3 artichoke
+C1 banana
+C2 apples
+C3 mango
+D1 soda
+D2 cola
+D3 spring

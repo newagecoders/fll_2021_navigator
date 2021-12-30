@@ -1,15 +1,24 @@
 import math
 import itertools
 import string
+
 def getCustList():
+    list_items_to_shop = []
+    with open("listCustomerWantsToShop.txt") as r:
+        for line in r:
+            list_items_to_shop = line.split()
+    return (list_items_to_shop)
+
+#This method is used to manually input the list
+#######################################################
+def getCustList1():
     n_of_items_to_ship = int(input("Enter the items in the list"))
     list_items_to_shop = []
     for i in range(0, n_of_items_to_ship):
         item_to_shop = input("Enter the item:").lower().strip()
         list_items_to_shop.append(item_to_shop)
     return (list_items_to_shop)
-
-
+########################################################
 def getItemsAvailable(list1, list2):
     list1_set = set(list1)
     differ = list(list1_set.intersection(list2))
@@ -17,6 +26,16 @@ def getItemsAvailable(list1, list2):
     return differ
 
 def getItemsInAisleMapping():
+    itemAisleMap = {}
+    with open("itemsInAisleMapping.txt") as f:
+        for line in f:
+            (key, val) = line.split()
+            itemAisleMap[key] = val
+    #print(itemAisleMap)
+    #print(type(itemAisleMap))
+    return itemAisleMap
+
+def getItemsInAisleMapping1():
     keymap_aisles = {
         "A1": "yogurt",
         "A2": "milk",
@@ -38,11 +57,6 @@ def getAisleList(dictOfElements, listOfValues):
             listOfKeys.append(item[0])
     return  listOfKeys
 
-
-def aisle(X,Y):
-    print(X,Y)
-    #if (A[x] == B[x]):
-    #    print("Same aisle")
 
 def aisle_mapp(aisle):
     aisle = str(aisle)
@@ -85,15 +99,15 @@ def get_best_path(isle_list,distance):
         list_optimum=current_perm.copy()
         #print("Distance:",distance_minimum,"List outside IF",current_perm )
     bestpath=[distance_minimum,list_optimum]
+    print("Total routes inspected for best route: ",len(possible_perm))
     return bestpath
-
-
-
+## Main Program where the Code starts ##
 def main():
     print("Welcome to Navigator")
     list_items_in_shop = []
     list_aisle_in_shop = []
     keymap_aisles = getItemsInAisleMapping()
+    #print(type(keymap_aisles))
     for items in keymap_aisles:
         list_items_in_shop.append(keymap_aisles[items])
         list_aisle_in_shop.append(items)
@@ -121,7 +135,11 @@ def main():
     #print(path)
 
 
-    print("Distance","for Loop:",path)
+    print("Distance:","for Loop:",path)
+    print("Shortest distance :",path[0], "Steps")
+    print("Shortest route:", path[1])
+    print(keymap_aisles)
+
 
 
 if __name__=="__main__":
