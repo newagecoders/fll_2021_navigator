@@ -10,3 +10,9 @@ C3 mango
 D1 soda
 D2 cola
 D3 spring
+E1 bottle
+E2 cucumber
+E3 cabbage
+F1 att
+F2 verizon
+F3 tmobile
